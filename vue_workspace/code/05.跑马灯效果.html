@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>跑马灯效果</title>
+</head>
+<script src="./lib/vue.js"></script>
+<body>
+    <div id="app">
+        <input type="button" value="浪起来" @click='run'>
+        <input type="button" value="别浪" @click='stop'>
+        <p>{{msg}}</p>
+    </div>
+
+    <script>
+        //注意：在vm实例中，如果想要获取data 中的数据，或者想要调用methods 中的方法，必须使用  this.数据属性名 或 this,方法名
+    var m = new Vue({
+        el:"#app",
+        data:{
+            msg:'猥琐发育，别浪~~'
+        },
+        methods:{
+            run () {
+                console.log(this.msg)
+
+                var start = this.msg.substring(0,1)
+                var end = this.msg.substring(1)
+            },
+            // stop:function () {
+                
+            // }
+        }
+    })
+
+    </script>
+    
+</body>
+</html>

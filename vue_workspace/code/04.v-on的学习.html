@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-on的学习</title>
+    <script src="./lib/vue.js"></script>
+</head>
+<body>
+
+    <!-- v-bind 是绑定属性的 -->
+    <!-- v-on 的学习: 绑定事件的 -->
+    <div id="app">
+        <input type="button" value="按钮" :title="mytitle" v-on:click="show">
+        <input type="button" value="按钮" :title="mytitle" v-on:mouseover="show"> <!--v-on 是vue提供的事件绑定机制-->
+        <input type="button" value="按钮" :title="mytitle" @mouseover="show"> <!-- @ 是vue提供的 v-on 的简写的方式 -->
+
+    </div>
+
+
+
+    <script>
+    
+    var m = new Vue({
+        el:'#app',
+        data:{
+            mytitle:"hello"
+        },
+        methods:{
+            show:function() {
+                alert("123");
+            }
+        }
+        
+    })
+    
+    </script>
+</body>
+</html>

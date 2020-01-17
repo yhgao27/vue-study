@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-clockd的学习</title>
+</head>
+<style>
+    [v-clock]{
+        display: none;
+    }
+
+</style>
+<body>
+    <div id="app">
+        <!-- 使用v-clock能够解决插值表达式闪烁的问题 -->
+        <p v-clock>===={{message}}------</p>
+        <!-- 默认v-text是没有闪烁的问题 -->
+        <!-- v-text 会覆盖元素中原本的内容，但是 插值表达式  只会替换自己的这个占位符，不会把整个元素的内容清空 -->
+        <h1 v-text='message'>=====-----</h1>
+
+        <!-- v-html会把html标签转义，而上面两种都不会转义 -->
+        <p v-html="message2"></p>
+    </div>
+    
+    <script src="./lib/vue.js"></script>
+    <script>
+     var m = new Vue({
+         el:'#app',
+         data:{
+             message:'v-clock的学习',
+             message2:"<h1>这是一个html标签</h1>"
+         }
+     })
+    </script>
+</body>
+</html>
