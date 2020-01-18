@@ -24,9 +24,12 @@
         methods:{
             run () {
                 console.log(this.msg)
-
+                //获取到头的第一个字符
                 var start = this.msg.substring(0,1)
+                //获取到后面的所有的字符
                 var end = this.msg.substring(1)
+                //重新拼接得到新的字符串,并赋值给this.msg
+                this.msg = end + start 
             },
             // stop:function () {
                 
