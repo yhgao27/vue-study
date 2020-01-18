@@ -19,21 +19,29 @@
     var m = new Vue({
         el:"#app",
         data:{
-            msg:'猥琐发育，别浪~~'
+            msg:'猥琐发育，别浪~~',
+            intervalId:null
         },
         methods:{
             run () {
-                console.log(this.msg)
-                //获取到头的第一个字符
-                var start = this.msg.substring(0,1)
-                //获取到后面的所有的字符
-                var end = this.msg.substring(1)
-                //重新拼接得到新的字符串,并赋值给this.msg
-                this.msg = end + start 
-            },
-            // stop:function () {
+                //-------------注意:vm实例,会监听自己身上的 data 中所有的数据的改变,只要数据一发生改变,就会自动把最新的数据 从data上同步到页面中去
+                //------- 好处:程序员只需要关心数据 不再需要考虑如何渲染到页面
                 
-            // }
+                if(this.intervalId != null) return;
+                this.intervalId = setInterval(() => {
+                    //获取到头的第一个字符
+                    var start = this.msg.substring(0,1)
+                    //获取到后面的所有的字符
+                    var end = this.msg.substring(1)
+                    //重新拼接得到新的字符串,并赋值给this.msg
+                    this.msg = end + start
+                },400)
+                 
+            },
+            stop () {   //停止计时器
+                clearInterval(this.intervalId)
+                this.intervalId = null
+            }
         }
     })
 
