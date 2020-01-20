@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>内联样式的绑定</title>
+    <script src="./lib/vue.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        <!-- 第一种：直接在style上写对象 -->
+        <h1 :style="{color:'red', 'font-weight':200}">这是vue的内联样式</h1>
+        
+        <!-- 第二种：把对象放入到data中去 -->
+        <h1 :style="styleobj">这是vue的内联样式</h1>
+        
+        <!-- 第三种：定义多个data中的样式 -->
+        <h1 :style="[styleobj, styleobj2]">这是vue的内联样式</h1>
+    </div>
+</body>
+<script>
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            styleobj:{color:'red', 'font-weight':200},
+            styleobj2:{fontStyle:'italic'}
+        }
+    })
+
+</script>
+</html>
