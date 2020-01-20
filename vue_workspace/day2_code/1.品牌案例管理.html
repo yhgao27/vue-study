@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>品牌案例管理</title>
+    <script src="./lib/vue.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap-3.3.7.css">
+</head>
+<body>
+    <div id="app">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">添加品牌</h3>
+            </div> 
+            <div class="panel-body form-inline">
+                <label >
+                    ID: <input type="text" v-model='id' class="form-control">
+                </label>
+                <label for="">
+                    名称: <input type="text" v-model='name' class="form-control">
+                </label>
+                <label for="">
+                    <input type="button" value="添加" class="btn btn-primary" @click='add'>
+                </label>
+            </div>
+        </div>
+        
+        <table class="table table-bordered table-hover table-striped">
+            <head>
+
+                <tr>
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        名称
+                    </th>
+                    <th>
+                        录入时间
+                    </th>
+                    <th>
+                        操作
+                    </th>
+                </tr>
+            </head>
+            <body>
+                <tr v-for='item in list' :key='item.id'>
+                    <td>{{item.id}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.ctime}}</td>
+                    <td>
+                        <a href="">删除</a>
+                    </td>
+                    
+                </tr>
+            </body>
+        </table>
+    </div>
+    <script>
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            list:[
+                {id:1,name:'奔驰',ctime:new Date()},
+                {id:2,name:'宝马',ctime:new Date()}
+            ]
+        },
+        methods:{
+            add(){
+                this.list.push({id:this.id,name:this.name,ctime:new Date()})
+            }
+        }
+    })
+    </script>
+</body>
+</html>
