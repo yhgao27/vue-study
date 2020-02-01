@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>自定义指定的学习</title>
+    <script src="./lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" id="ti1">
+        <input type="text" id="ti2" v-focus="'blue'">
+    </div>
+<script>
+
+    //Vue 提供的定位光标的方法
+    //使用 Vue.directive()  定义全局的指定  v-focus
+    // 其中：参数1 指定的名称，注意，在定义的时候，指定的名称的前面不需要加  v- ，但是页面调用的时候需要加上v-
+    // 参数2：是一个对象，这个对象身上，有一些指定相关的函数，这些函数可以在特定的阶段，执行相关的操作
+    Vue.directive('focus',{
+        bind:function(el,binding){  //每当指定绑定到元素上的时候，会立即执行这个bind函数，  只执行一次
+                //注意: 在每个 函数中，第一个参数，永远是el，表示 被绑定了指令的那个元素，这个el 参数，是一个原生的js对象
+                // 在元素  刚绑定了指令的时候，还没有 插入到 DOM 中去，这时候 调用 focus 方法没有作用， 因为一个元素， 只有插入DOM 之后才能获取焦点
+            // el.style.color = 'red'
+            //和样式相关的操作，一般都可以在 bind 中执行
+
+            console.log(binding.name)
+            console.log(binding.value)  //不带引号
+            console.log(binding.expression) //带引号
+            
+            el.style.color = binding.value  //这个可以改变颜色
+            // el.style.color = binding.expression
+
+
+        },
+    inserted: function (el) {  // inserted 表示元素  插入到DOM 中的时候，会执行 inserted 函数【触发1次】
+        // 聚焦元素
+         el.focus()     //和js行为相关的操作，最好放在 inserted 中去执行，防止 JS行为不生效
+    },
+    update: function(el){   // 当VNode 更新的时候，会执行  updated ，可能会触发多次
+        // el.focus()
+    }
+    })
+
+
+    var vm = new Vue({
+        el:'#app',
+        data:{
+
+        }
+    })
+
+    //js原生的定位光标的方法
+        // document.getElementById('ti2').focus()
+</script>
+
+</body>
+</html>

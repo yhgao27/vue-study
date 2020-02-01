@@ -19,7 +19,8 @@
                     ID: <input type="text" v-model='id' class="form-control">
                 </label>
                 <label for="">
-                    名称: <input type="text" v-model='name' class="form-control">
+                    <!-- 按键修饰符 -->
+                    名称: <input type="text" v-model='name' class="form-control" @keyup.f2='add'>
                 </label>
                 <label for="">
                     <!-- 在Vue中，使用事件绑定机制，为元素指定处理函数的时候，如果加了小括号，就可以给函数传参了 -->
@@ -57,7 +58,7 @@
                 <tr v-for='item in search(keywords)' :key='item.id'>
                     <td>{{item.id}}</td>
                     <td>{{item.name}}</td>
-                    <td>{{item.ctime | dateFormate('yyyy-mm-dd')}}</td>
+                    <td>{{item.ctime | dateFormate('')}}</td>
                     <td>
                         <a href="" @click.prevent = "del(item.id)" >删除</a>
                     </td>
@@ -66,6 +67,11 @@
             </body>
         </table>
     </div>
+    
+    <div id="app2">
+       <h3 v-fontweight='1000' v-fontsize='60'> {{dt | dateFormate('')}} </h3> 
+    </div>
+
     <script>
 
     // 全局过滤器，进行时间的格式化
@@ -74,18 +80,18 @@
 
             //yyyy-mm-dd
             var y = dt.getFullYear()
-            var m = dt.getMonth()+1
-            var d = dt.getDate()
+            var m = (dt.getMonth()+1).toString().padStart(2,'0')
+            var d = dt.getDate().toString().padStart(2,'0')
 
-           // return y+'-'+m+'-'+d
-        //    return `${y}-${m}-${d}`
+            // return y+'-'+m+'-'+d
+            // return `${y}-${m}-${d}`
 
             if(pattern.toLowerCase() === "yyyy-mm-dd"){
                 return `${y}-${m}-${d}`
             }else{
-                var hh = dt.getHours()
-                var mm = dt.getMinutes()
-                var ss = dt.getSeconds()
+                var hh = dt.getHours().toString().padStart(2,'0')
+                var mm = dt.getMinutes().toString().padStart(2,'0')
+                var ss = dt.getSeconds().toString().padStart(2,'0')
 
                 return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
             }
@@ -93,6 +99,10 @@
         }
         )
 
+    //自定义全局键盘码
+    Vue.config.keyCodes.f2 = 113
+
+    
     var vm = new Vue({
         el:'#app',
         data:{
@@ -168,6 +178,53 @@
             }
         }
     })
+    
+   
+   
+    //如何自定义一个私有的过滤器（局部）
+    var vm2 = new Vue({
+        el:"#app2",
+        data:{
+            dt: new Date()
+        },
+        filters:{
+            dateFormate : function(ctime,pattern=''){
+            var dt = new Date(ctime)
+
+            //yyyy-mm-dd
+            var y = dt.getFullYear()
+            var m = dt.getMonth()+1
+            var d = dt.getDate()
+
+            // return y+'-'+m+'-'+d
+            // return `${y}-${m}-${d}`
+
+            if(pattern.toLowerCase() === "yyyy-mm-dd"){
+                return `${y}-${m}-${d}`
+            }else{
+                var hh = dt.getHours()
+                var mm = dt.getMinutes()
+                var ss = dt.getSeconds()
+
+                return `${y}-${m}-${d} ${hh}:${mm}:${ss} ~~~`
+            }
+
+        }
+        },
+        directives:{    //自定义私有指定
+            'fontweight':{
+                bind:function(el,binding){
+                    el.style.fontWeight = binding.value
+                    // console.log(binding.value)
+                }
+            },
+            'fontsize':function(el,binding){    //注意：这个 function 等同于 把 代码同时写到了 bind 和update 中去了
+                el.style.fontSize = parseInt(binding.value) + 'px'
+            }
+
+        }
+    })
+    
     </script>
 </body>
 </html>
