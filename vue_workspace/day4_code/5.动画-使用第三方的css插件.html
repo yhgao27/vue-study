@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue.js"></script>
+    <link rel="stylesheet" href="./lib/animate.css">
+    <!-- 2. 使用两组样式，来控制 transition 内部的元素实现动画-->
+    <style>
+        /* v-enter 【这是一个时间点】是进入之前的,元素的起始状态，此时还没有开始进入*/
+        /* v-leave-to [这也是一个时间点]，这是离开之后的，离开的终止状态，此时，元素动画已经结束*/
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            transform: translateX(100px);
+        }
+
+        /* v-enter-active【入场动画的时间段】 */
+        /* v-leave-active【离场动画的时间段】 */
+        .v-enter-active,
+        .v-leave-active {
+            transition: all 0.5s ease;
+        }
+
+        /*使用自定义的前缀*/
+        .my-enter,
+        .my-leave-to {
+            opacity: 0;
+            transform: translateY(100px);
+        }
+
+        /* my-enter-active【入场动画的时间段】 */
+        /* my-leave-active【离场动画的时间段】 */
+        .my-enter-active,
+        .my-leave-active {
+            transition: all 0.5s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <input type="button" value="toggle" @click='flag=!flag'>
+        <!-- 1.使用transition 元素，把需要被动画控制的元素包裹起来-->
+
+        <!-- transition 元素是vue官方提供的-->
+        <transition>
+
+            <h3 v-if='flag'>这是一个h3</h3>
+        </transition>
+        <hr>
+        <input type="button" value="toggle" @click='flag2=!flag2'>
+        <!-- 1.使用transition 元素，把需要被动画控制的元素包裹起来-->
+
+        <!-- transition 元素是vue官方提供的-->
+        <transition name='my'>
+            <h3 v-if='flag2'>这是第二个h3</h3>
+        </transition>
+        
+        <hr>
+
+        <!--使用第三方插件实现更加复杂的动画-->
+        <input type="button" value="toggle" @click='flag3=!flag3'>
+        <!-- 1.使用transition 元素，把需要被动画控制的元素包裹起来-->
+        
+        <!-- transition 元素是vue官方提供的-->
+        <!-- <transition enter-active-class='animated bounceInLeft' leave-active-class='animated bounceOutLeft'>
+            <h3 v-if='flag3'>这是第二个h3</h3>
+        </transition> -->
+
+        <!-- 使用 :duration='毫秒值' 来统一设置 入场和 离场的动画时长-->
+        <!-- <transition enter-active-class=' bounceInLeft' leave-active-class=' bounceOutLeft' :duration='200'>
+            <h3 v-if='flag3' class="animated">这是第二个h3</h3>
+        </transition> -->
+
+        <!-- 分别设置入场时长和离场时长-->
+        <transition enter-active-class=' bounceInLeft' leave-active-class=' bounceOutLeft' 
+        :duration='{enter:100000 , leave: 100}'>
+            <h3 v-if='flag3' class="animated">这是第二个h3</h3>
+        </transition>
+
+
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                flag: false,
+                flag2: false,
+                flag3: false
+            },
+            methods: {
+
+            },
+
+
+        })
+    </script>
+</body>
+
+</html>
