@@ -11,14 +11,18 @@
 
 <body>
     <div id="app">
-
+        <tmpl1></tmpl1>
     </div>
+    <!-- <tmpl1></tmpl1>  现在这里就不能使用了 -->
 
     <script>
         var vm = new Vue({
             el: '#app',
             data: {},
-            methods: {}
+            methods: {},
+            components:{
+                'tmpl1':{template:"<h3>这是私有的组件</h3>"}
+            }
         });
     </script>
 </body>
