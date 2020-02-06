@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 父组件，可以在引用子组件的时候，通过 属性绑定（V-bind：）的形式，把 需要传递给子组件的数据，以属性半丁的形式，传递到子组件内部，供子组件使用-->
+        <coml v-bind:parentmsg="msg"></coml>
+    </div>
+
+    <template id="tmpl">
+        <h1 @click = 'change'>这是子组件--{{parentmsg}}--{{submsg}}</h1>
+    </template>
+    <script> 
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg:'123 父组件数据'
+            },
+            methods: {},
+            components:{
+                //结论：经过演示，发现，子组件中，默认无法访问到 父组件的data上的数据 和 methods 中方法
+                coml:{
+                    data:function(){    //注意：子组件中的 data 数据，并不是通过 父组件传递过来的 ，而是子组件自身四月偶的，比如：子组件通过Ajax，请求回来的数据，都可以梵高 data 身上
+                        return {        //data上的数据都是可读可写的
+                            submsg:'这是子组件数据'
+                            }
+                    },
+                    template:'#tmpl',
+                    //注意：组件中的所有 props 中的数据，都是通过父子间传递给子组件的
+                    //注意：props 中的数据都是只读的，无法重新更改
+                    props:['parentmsg'], //把父组件传递过来的 parentmsg 属性，现在 props 数组中，定义一下，这样才能使用这个数据
+                    methods:{
+                        change(){
+                            this.submsg = '改变了子组件的数据',
+                            this.parentmsg = '修改了子组件' //这里可以修改，但是会报错，vue不建议修改父组件的数据
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
