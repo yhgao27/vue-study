@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue.js"></script>
+    <script src="./lib/vue-router-3.0.1.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to='/account'>Account</router-link>
+        <router-view></router-view>
+    </div>
+
+    <template id="tmpl">
+        <div>
+            <h3>这是一个组件的模板对象</h3>
+            <router-link to='/account/login'>登录</router-link>
+            <router-link to='/account/register'>注册</router-link>
+            <router-view></router-view>
+        </div>
+    </template>
+    <script>
+        var account = {
+            template: '#tmpl'
+        }
+        var login = {
+            template: '<h3>登录</h3>'
+        }
+        var register = {
+            template: '<h3>注册</h3>'
+        }
+        var router = new VueRouter({
+            routes: [
+                {
+                    path: '/account',
+                    component: account,
+                    //使用children 属性实现子路由，同时，子路由的 path 前面，不压迫带‘/’，否则永远以根路径访问，这样用户不好查看
+                    children: [
+                        { path: 'login', component: login },
+                        { path: 'register', component: register },
+                    ]
+                },
+                // { path: '/account/login', component: login },
+                // { path: '/account/register', component: register },      //这样是表示和account平级的，不能起到作用
+
+            ]
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            router
+        });
+    </script>
+</body>
+
+</html>
