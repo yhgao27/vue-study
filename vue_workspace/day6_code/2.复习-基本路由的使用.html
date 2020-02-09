@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue.js"></script>
+    <script src="./lib/vue-router-3.0.1.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to='/login'>登录</router-link>
+        <router-link to='/register'>注册</router-link>
+        <router-view></router-view> <!-- 6.给一个路由容器 -->
+    </div>
+
+    <template id="login">
+        <h3>登录组件</h3>
+    </template>
+    <template id="register">
+        <h3>注册组件</h3>
+    </template>
+    <script>
+    //2.创建子组件
+        var login = {
+            template:'#login'
+        }
+        var register = {
+            template:'#register'
+        }
+    //3.创建路由规则
+    var router = new VueRouter({
+        routes:[
+            {path:'/',redirect:'/login'},
+            {path:'/login',component:login},
+            {path:'/register',component:register},
+        ],
+        linkActiveClass:'myActive'
+    })
+
+
+    //创建 vue 实例，得到ViewModel
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            router   //4.父组件引用路由规则
+                
+            
+        });
+    </script>
+</body>
+
+</html>

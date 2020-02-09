@@ -7,22 +7,35 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="./lib/vue.js"></script>
     <title>Vue-demo</title>
-·</head>
+</head>
 
 <body>
     <div id="app">
-        <coml v-bind:parentmsg="msg"></coml>
+        <coml v-bind:parentmsg="msg" v-on:func = "getSubMsg"></coml>
     </div>
 
     <template id='tmpl'>
         <div>
             <h3>这是子组件---{{ parentmsg }}</h3>
+            <input type="button" value="传递子组件数据" @click='sendMsg'>
         </div>
     </template>
     <script>
         //1.创建一个子组件对象
         var coml = {
             template: '#tmpl',
+            data(){
+                return {
+                    submsg:'子组件数据'
+                }
+            },
+            methods:{
+                sendMsg(){
+                    console.log(this.submsg)
+                    // getSubMsg(this.submsg)  //不能这样直接访问父组件方法
+                    this.$emit('func',this.submsg)  //得通过Vue 提供的 emit 实例获取父组件方法
+                }
+            },
             props: ['parentmsg']    //注意这里的名称不能有大写字母
         }
         var vm = new Vue({
@@ -30,7 +43,11 @@
             data: {
                 msg: '这是父组件的数据'
             },
-            methods: {},
+            methods: {
+                getSubMsg(data){
+                    console.log('父组件拿到了'+data)
+                }
+            },
             components: {
                 coml
             }
